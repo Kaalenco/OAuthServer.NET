@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ConfirmationmodalComponent, HttpService } from 'src/app';
 import { BaseComponent } from 'src/app/base.component';
@@ -34,9 +35,9 @@ export class ClientpostlogoutredirecturisComponent extends BaseComponent{
         existingPostLogoutRedirectURIs: this.clientsPostLogoutRedirectURIs.filter(x => x.clientId == this.clientId),
         isCreate: true
       };
-  
+
       const clientPostLogoutRedirectCreateModal = this.matDialog.open(ClientpostlogoutredirecturimodalComponent, { width: '250px', data: clientPostLogoutRedirectModalData });
-  
+
       clientPostLogoutRedirectCreateModal.afterClosed().subscribe((result: IClientPostLogoutRedirectURIModalData) => {
         if (result !== undefined) {
           const request : IClientPostLogoutRedirectURICreateRequest = {
@@ -48,20 +49,20 @@ export class ClientpostlogoutredirecturisComponent extends BaseComponent{
         }
       });
     }
-  
+
     editPostLogoutRedirectURI(postLogoutRedirectURI: string) {
       const selectedClientPostLogoutRedirectURIs = this.clientsPostLogoutRedirectURIs.filter(x => x.clientId === this.clientId);
       const selectedPostLogoutRedirectURI = selectedClientPostLogoutRedirectURIs.find(x => x.postLogoutRedirectURI === postLogoutRedirectURI);
-  
+
       const clientPostLogoutRedirectModalData: IClientPostLogoutRedirectURIModalData = {
         isConfirmed: false,
         postLogoutRedirectURI: selectedPostLogoutRedirectURI.postLogoutRedirectURI,
         existingPostLogoutRedirectURIs: selectedClientPostLogoutRedirectURIs,
         isCreate: false
       };
-  
+
       const clientPostLogoutRedirectURIEditModal = this.matDialog.open(ClientpostlogoutredirecturimodalComponent, { width: '250px', data: clientPostLogoutRedirectModalData });
-  
+
       clientPostLogoutRedirectURIEditModal.afterClosed().subscribe((result: IClientPostLogoutRedirectURIModalData) => {
         if (result !== undefined) {
           const request: IClientPostLogoutRedirectURIUpdateRequest = {
@@ -74,11 +75,11 @@ export class ClientpostlogoutredirecturisComponent extends BaseComponent{
         }
       });
     }
-  
+
     deletePostLogoutRedirectURI(postLogoutRedirectURI: string) {
       const selectedClientPostLogoutRedirectURIs = this.clientsPostLogoutRedirectURIs.filter(x => x.clientId === this.clientId);
       const selectedPostLogoutRedirectURI = selectedClientPostLogoutRedirectURIs.find(x => x.postLogoutRedirectURI === postLogoutRedirectURI);
-  
+
       const confirmationModalData: IConfirmationModalData = {
         isConfirmed: false,
         title: 'Confirm Delete',
@@ -86,9 +87,9 @@ export class ClientpostlogoutredirecturisComponent extends BaseComponent{
         cancelMessage: 'Cancel',
         confirmMessage: 'Confirm'
       };
-  
+
       const confirmationModal = this.matDialog.open(ConfirmationmodalComponent, { width: '250px', data: confirmationModalData });
-  
+
       confirmationModal.afterClosed().subscribe((result: IConfirmationModalData) => {
         if (result !== undefined) {
           this.http.removeClientPostLogoutRedirectURI(selectedPostLogoutRedirectURI.id);

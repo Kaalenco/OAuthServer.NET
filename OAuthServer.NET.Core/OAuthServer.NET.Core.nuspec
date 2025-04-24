@@ -17,11 +17,11 @@
     <dependencies>
 		<group targetFramework="netstandard2.1">
 			<dependency id="JWTs" version="1.0.2" />
-			<dependency id="Microsoft.AspNetCore.Http.Abstractions" version="2.2" />
-			<dependency id="Microsoft.AspNetCore.Identity.EntityFrameworkCore" version="5.0.1" />
-			<dependency id="Microsoft.EntityFrameworkCore" version="5.0.1" />
-			<dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="5.0.1" />
-			<dependency id="System.Text.Json" version="5.0" />
+			<dependency id="Microsoft.AspNetCore.Http.Abstractions" version="2.3.0" />
+			<dependency id="Microsoft.AspNetCore.Identity.EntityFrameworkCore" version="9.0.4" />
+			<dependency id="Microsoft.EntityFrameworkCore" version="9.0.4" />
+			<dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="9.0.4" />
+			<dependency id="System.Text.Json" version="9.0.4" />
 		</group>
 	</dependencies>
   </metadata>

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BaseComponent } from '../../base.component';
@@ -19,7 +20,7 @@ export class ClientsComponent extends BaseComponent {
   constructor(protected store: Store<IAppState>,
     protected router: Router,
     protected http: HttpService,
-    protected matDialog: MatDialog) { 
+    protected matDialog: MatDialog) {
       super(store, http, matDialog);
     }
 

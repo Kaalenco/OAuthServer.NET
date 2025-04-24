@@ -1,8 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogActions, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Store } from '@ngrx/store';
-import { HttpService } from 'src/app';
-import { BaseComponent } from 'src/app/base.component';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CacheService } from 'src/app/services/cache.service';
 
 @Component({
@@ -14,12 +11,13 @@ export class ClientcreatemodalComponent {
   grantId: string;
   grants: IGrant[] = [];
 
-  data = this.dataInstance;
+  data: IClientCreateModalData;
 
-  constructor(private dialogRef: MatDialogRef<ClientcreatemodalComponent>,
+  constructor(@Inject(MatDialogRef) private dialogRef: MatDialogRef<ClientcreatemodalComponent>,
     @Inject(MAT_DIALOG_DATA) private dataInstance: IClientCreateModalData,
     private cacheService: CacheService) {
       this.grants = dataInstance.grants;
+      this.data = this.dataInstance;
    }
 
    onNoClick() {

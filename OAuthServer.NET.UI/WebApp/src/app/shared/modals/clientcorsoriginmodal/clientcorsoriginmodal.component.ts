@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-clientcorsoriginmodal',
@@ -11,10 +11,10 @@ export class ClientcorsoriginmodalComponent {
   originURI: string;
   isCreate: boolean;
 
-  data = this.dataInstance;
+  // Removed redundant data property
 
   constructor(private dialogRef: MatDialogRef<ClientcorsoriginmodalComponent>,
-    @Inject(MAT_DIALOG_DATA) private dataInstance: IClientCORSOriginModalData) { 
+    @Inject(MAT_DIALOG_DATA) private dataInstance: IClientCORSOriginModalData) {
       this.existingCORSOrigins = dataInstance.existingCORSOrigins;
       this.isCreate = dataInstance.isCreate;
       this.originURI = dataInstance.originURI;
@@ -25,14 +25,14 @@ export class ClientcorsoriginmodalComponent {
   }
 
   onSaveClick() {
-    this.data.originURI = this.originURI;
-    this.data.isConfirmed = true;
-    this.dialogRef.close(this.data);
+    this.dataInstance.originURI = this.originURI;
+    this.dataInstance.isConfirmed = true;
+    this.dialogRef.close(this.dataInstance);
   }
 
   get isValidForSave(): boolean {
-    return this.originURI && 
-      this.originURI !== '' && 
+    return this.originURI &&
+      this.originURI !== '' &&
       this.existingCORSOrigins.filter(x => x.originURI.toLowerCase() === this.originURI.toLowerCase()).length == 0;
   }
 

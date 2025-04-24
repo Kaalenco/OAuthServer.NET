@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BaseIdComponent } from '../../baseId.component';
@@ -11,11 +11,11 @@ import { HttpService } from '../../services/http.service';
   styleUrls: ['./grant.component.scss']
 })
 export class GrantComponent extends BaseIdComponent {
-  id: string;
+  declare id: string;
   grantName: string;
   authorizeResponseType: string;
   tokenGrantType: string;
-  
+
   constructor(protected route: ActivatedRoute,
     protected store: Store<IAppState>,
     protected http: HttpService,
@@ -47,7 +47,7 @@ export class GrantComponent extends BaseIdComponent {
       this.http.updateGrant(request);
     } else {
       this.http.createGrant(request);
-    } 
+    }
 
     this.router.navigate(['/grants']);
   }

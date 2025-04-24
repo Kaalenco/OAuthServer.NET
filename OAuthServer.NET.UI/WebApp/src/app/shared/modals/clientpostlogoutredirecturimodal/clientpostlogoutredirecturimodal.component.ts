@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-clientpostlogoutredirecturimodal',
@@ -11,13 +11,14 @@ export class ClientpostlogoutredirecturimodalComponent {
   postLogoutRedirectURI: string;
   isCreate: boolean;
 
-  data = this.dataInstance;
+  data: IClientPostLogoutRedirectURIModalData;
 
   constructor(private dialogRef: MatDialogRef<ClientpostlogoutredirecturimodalComponent>,
-    @Inject(MAT_DIALOG_DATA) private dataInstance: IClientPostLogoutRedirectURIModalData) { 
+    @Inject(MAT_DIALOG_DATA) private dataInstance: IClientPostLogoutRedirectURIModalData) {
       this.existingPostLogoutRedirectURIs = dataInstance.existingPostLogoutRedirectURIs;
       this.isCreate = dataInstance.isCreate;
       this.postLogoutRedirectURI = dataInstance.postLogoutRedirectURI;
+      this.data = this.dataInstance;
     }
 
   onNoClick() {
@@ -31,8 +32,8 @@ export class ClientpostlogoutredirecturimodalComponent {
   }
 
   get isValidForSave(): boolean {
-    return this.postLogoutRedirectURI && 
-      this.postLogoutRedirectURI !== '' && 
+    return this.postLogoutRedirectURI &&
+      this.postLogoutRedirectURI !== '' &&
       this.existingPostLogoutRedirectURIs.filter(x => x.postLogoutRedirectURI.toLowerCase() === this.postLogoutRedirectURI.toLowerCase()).length == 0;
   }
 }

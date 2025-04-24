@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ConfirmationmodalComponent, HttpService } from 'src/app';
 import { BaseComponent } from 'src/app/base.component';
@@ -17,7 +18,7 @@ export class ClientscopesComponent extends BaseComponent {
 
   constructor(protected store: Store<IAppState>,
     protected http: HttpService,
-    protected matDialog: MatDialog) {
+    @Inject(MatDialog) protected matDialog: MatDialog) {
       super(store, http, matDialog);
     }
 

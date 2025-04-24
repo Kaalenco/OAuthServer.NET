@@ -1,5 +1,5 @@
 import { OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { HttpService } from './services/http.service';
@@ -31,7 +31,7 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
     });
 
     this.$clientsSubscription = this.store
-      .select(x => x.clients) 
+      .select(x => x.clients)
       .subscribe((clients: IClient[]) => {
         this.assignClients(clients);
       });

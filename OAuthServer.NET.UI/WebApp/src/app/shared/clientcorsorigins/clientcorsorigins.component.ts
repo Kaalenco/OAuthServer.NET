@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ConfirmationmodalComponent, HttpService } from 'src/app';
 import { BaseComponent } from 'src/app/base.component';
@@ -34,9 +35,9 @@ export class ClientcorsoriginsComponent extends BaseComponent {
         existingCORSOrigins: this.clientsCORSOrigins.filter(x => x.clientId === this.clientId),
         isCreate: true
       };
-  
+
       const clientCORSOriginCreateModal = this.matDialog.open(ClientcorsoriginmodalComponent, { width: '250px', data: clientCORSModalData });
-  
+
       clientCORSOriginCreateModal.afterClosed().subscribe((result: IClientCORSOriginModalData) => {
         if (result !== undefined) {
           const request : IClientCORSOriginCreateRequest = {
@@ -48,20 +49,20 @@ export class ClientcorsoriginsComponent extends BaseComponent {
         }
       });
     }
-  
+
     editCORSOrigin(originURI: string) {
       const selectedCORSOrigins = this.clientsCORSOrigins.filter(x => x.clientId === this.clientId);
       const selectedCORSOrigin = selectedCORSOrigins.find(x => x.originURI === originURI);
-  
+
       const clientCORSModalData: IClientCORSOriginModalData = {
         isConfirmed: false,
         originURI: selectedCORSOrigin.originURI,
         existingCORSOrigins: selectedCORSOrigins,
         isCreate: false
       };
-  
+
       const clientCORSEditModal = this.matDialog.open(ClientcorsoriginmodalComponent, { width: '250px', data: clientCORSModalData });
-  
+
       clientCORSEditModal.afterClosed().subscribe((result: IClientCORSOriginModalData) => {
         if (result !== undefined) {
           const request: IClientCORSOriginUpdateRequest = {
@@ -74,11 +75,11 @@ export class ClientcorsoriginsComponent extends BaseComponent {
         }
       });
     }
-  
+
     deleteCORSOrigin(originURI: string) {
       const selectedCORSOrigins = this.clientsCORSOrigins.filter(x => x.clientId === this.clientId);
       const selectedOrigin = selectedCORSOrigins.find(x => x.originURI === originURI);
-  
+
       const confirmationModalData: IConfirmationModalData = {
         isConfirmed: false,
         title: 'Confirm Delete',
@@ -86,9 +87,9 @@ export class ClientcorsoriginsComponent extends BaseComponent {
         cancelMessage: 'Cancel',
         confirmMessage: 'Confirm'
       };
-  
+
       const confirmationModal = this.matDialog.open(ConfirmationmodalComponent, { width: '250px', data: confirmationModalData });
-  
+
       confirmationModal.afterClosed().subscribe((result: IConfirmationModalData) => {
         if (result !== undefined) {
           this.http.removeClientCORSOrigin(selectedOrigin.id);

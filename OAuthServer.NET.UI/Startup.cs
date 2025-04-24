@@ -1,4 +1,11 @@
+using System;
+using System.Security.Cryptography;
+using System.Text;
+
 using AutoMapper;
+
+using JWTs;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,16 +16,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+
 using OAuthServer.NET.Core.Data;
 using OAuthServer.NET.Core.Middleware;
-using OAuthServer.NET.UI.Models.DTOs;
 using OAuthServer.NET.Core.Models.Entities;
+using OAuthServer.NET.UI.Models.DTOs;
 using OAuthServer.NET.UI.Services;
-using System.Text;
-using JWTs;
-using OAuthServer.NET.Core.Models.Exceptions;
-using System;
-using System.Security.Cryptography;
 
 namespace OAuthServer.NET.UI
 {
@@ -38,14 +41,15 @@ namespace OAuthServer.NET.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if (string.IsNullOrWhiteSpace(Configuration["ConnectionStrings:Database"]))
+            var connectionString = Configuration["ConnectionStrings:Database"];
+            if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw new AppException("Invalid connection string");
+                connectionString = "Server=.;Database=OAuthServer;Trusted_Connection=True;TrustServerCertificate=True;";
             }
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(Configuration["ConnectionStrings:Database"]);
+                options.UseSqlServer(connectionString);
             });
 
             services.AddTransient<IDAL, DAL>();

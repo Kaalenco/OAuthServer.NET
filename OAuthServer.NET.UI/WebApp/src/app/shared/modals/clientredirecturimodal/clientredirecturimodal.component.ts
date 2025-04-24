@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-clientredirecturimodal',
@@ -11,10 +11,11 @@ export class ClientredirecturimodalComponent {
   redirectURI: string;
   isCreate: boolean;
 
-  data = this.dataInstance;
+  data: IClientRedirectURIModalData;
 
   constructor(private dialogRef: MatDialogRef<ClientredirecturimodalComponent>,
-    @Inject(MAT_DIALOG_DATA) private dataInstance: IClientRedirectURIModalData) { 
+    @Inject(MAT_DIALOG_DATA) private dataInstance: IClientRedirectURIModalData) {
+      this.data = this.dataInstance;
       this.existingClientRedirectURIs = dataInstance.existingRedirectURIs;
       this.isCreate = dataInstance.isCreate;
       this.redirectURI = dataInstance.redirectURI;
@@ -31,8 +32,8 @@ export class ClientredirecturimodalComponent {
   }
 
   get isValidForSave(): boolean {
-    return this.redirectURI && 
-      this.redirectURI !== '' && 
+    return this.redirectURI &&
+      this.redirectURI !== '' &&
       this.existingClientRedirectURIs.filter(x => x.redirectURI.toLowerCase() === this.redirectURI.toLowerCase()).length == 0;
   }
 }

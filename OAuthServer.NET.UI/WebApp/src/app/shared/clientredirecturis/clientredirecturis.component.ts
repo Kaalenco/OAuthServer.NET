@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { ConfirmationmodalComponent, HttpService } from 'src/app';
 import { BaseComponent } from 'src/app/base.component';
@@ -34,9 +35,9 @@ export class ClientredirecturisComponent extends BaseComponent {
         existingRedirectURIs: this.clientsRedirectURIs.filter(x => x.clientId === this.clientId),
         isCreate: true
       };
-  
+
       const clientRedirectCreateModal = this.matDialog.open(ClientredirecturimodalComponent, { width: '250px', data: clientRedirectModalData });
-  
+
       clientRedirectCreateModal.afterClosed().subscribe((result: IClientRedirectURIModalData) => {
         if (result !== undefined) {
           const request : IClientRedirectURICreateRequest = {
@@ -48,20 +49,20 @@ export class ClientredirecturisComponent extends BaseComponent {
         }
       });
     }
-  
+
     editRedirectURI(redirectURI: string) {
       const selectedClientRedirectURIs = this.clientsRedirectURIs.filter(x => x.clientId === this.clientId);
       const selectedRedirectURI = selectedClientRedirectURIs.find(x => x.redirectURI === redirectURI);
-  
+
       const clientRedirectModalData: IClientRedirectURIModalData = {
         isConfirmed: false,
         redirectURI: selectedRedirectURI.redirectURI,
         existingRedirectURIs: selectedClientRedirectURIs,
         isCreate: false
       };
-  
+
       const clientRedirectURIEditModal = this.matDialog.open(ClientredirecturimodalComponent, { width: '250px', data: clientRedirectModalData });
-  
+
       clientRedirectURIEditModal.afterClosed().subscribe((result: IClientRedirectURIModalData) => {
         if (result !== undefined) {
           const request: IClientRedirectURIUpdateRequest = {
@@ -74,11 +75,11 @@ export class ClientredirecturisComponent extends BaseComponent {
         }
       });
     }
-  
+
     deleteRedirectURI(redirectURI: string) {
       const selectedClientRedirectURIs = this.clientsRedirectURIs.filter(x => x.clientId === this.clientId);
       const selectedRedirectURI = selectedClientRedirectURIs.find(x => x.redirectURI === redirectURI);
-  
+
       const confirmationModalData: IConfirmationModalData = {
         isConfirmed: false,
         title: 'Confirm Delete',
@@ -86,9 +87,9 @@ export class ClientredirecturisComponent extends BaseComponent {
         cancelMessage: 'Cancel',
         confirmMessage: 'Confirm'
       };
-  
+
       const confirmationModal = this.matDialog.open(ConfirmationmodalComponent, { width: '250px', data: confirmationModalData });
-  
+
       confirmationModal.afterClosed().subscribe((result: IConfirmationModalData) => {
         if (result !== undefined) {
           this.http.removeClientRedirectURI(selectedRedirectURI.id);

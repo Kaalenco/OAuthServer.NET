@@ -1,29 +1,30 @@
-﻿using JWTs;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using JWTs;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
+
 using OAuthServer.NET.BLL.Authorize;
 using OAuthServer.NET.BLL.Login;
 using OAuthServer.NET.BLL.Token;
 using OAuthServer.NET.Core.Data;
 using OAuthServer.NET.Core.Middleware;
 using OAuthServer.NET.Core.Models.Entities;
+using OAuthServer.NET.Core.Models.Exceptions;
 using OAuthServer.NET.CORS;
 using OAuthServer.NET.Middleware;
-using OAuthServer.NET.Services;
-using System;
-using Microsoft.Extensions.Primitives;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using OAuthServer.NET.Core.Models.Exceptions;
-using System.ComponentModel.DataAnnotations;
 using OAuthServer.NET.Providers;
+using OAuthServer.NET.Services;
 
 namespace OAuthServer.NET
 {
@@ -33,12 +34,12 @@ namespace OAuthServer.NET
         {
             if (string.IsNullOrWhiteSpace(oauthServerParams.ConnectionString))
             {
-                throw new AppException("Invalid connection string");
+                oauthServerParams.ConnectionString = "Server=.;Database=OAuthServer;Trusted_Connection=True;TrustServerCertificate=True;";
             }
 
             if (string.IsNullOrWhiteSpace(oauthServerParams.AdminPassword))
             {
-                throw new AppException("Invalid admin password");
+                oauthServerParams.AdminPassword = "admin";
             }
 
             services.AddSingleton(oauthServerParams);
@@ -66,7 +67,7 @@ namespace OAuthServer.NET
             {
                 options.UseSqlServer(oauthServerParams.ConnectionString);
             });
-            
+
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
